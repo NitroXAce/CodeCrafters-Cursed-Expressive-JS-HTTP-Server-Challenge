@@ -7,24 +7,33 @@
             message = data.toString().split("\r\n"),
             path = message[0].split(' ')[1]
         )=>(
-            console.log(data.toString(),`\nPath: '${path}'`),
-            stringToObj(
-                message,{
-                    [`Get ${path?.[1] ?? '/'} HTTP/1.1`]:{
-                        'Host: localhost:4221':{
-                            'User-Agent: Go-http-client/1.1':()=>(
-                                socket.write(`${[
-                                    'HTTP/1.1 200 OK',
-                                    'Content-Type: text/plain',
-                                    'Content-Length: 3',
-                                    '',
-                                    'abc'
-                                ].join('\r\n')}\r\n`),
-                                socket.end()
-                            )
+            console.log(data.toString(),`\nPath: '${path}'`),(
+                match(message[0],{
+                    Get:{
+                        [path?.[1] ?? '/']:{
+                            'HTTP/1.1':true
                         }
                     }
-                },'\r\n'
+                }) &&
+                match(message[1],{
+                    'Host:':{
+                        'localhost:4221':true
+                    }
+                }) &&
+                match(message[2],{
+                    'User-Agent:':{
+                        'Go-http-client/1.1':()=>(
+                            socket.write(`${[
+                                'HTTP/1.1 200 OK',
+                                'Content-Type: text/plain',
+                                'Content-Length: 3',
+                                '',
+                                'abc'
+                            ].join('\r\n')}\r\n`),
+                            socket.end()
+                        )
+                    }
+                })
             ) ?? socket.end()
             /*path === "/"
             ? socket.write("HTTP/1.1 200 OK\r\n\r\n")
