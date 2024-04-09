@@ -6,8 +6,7 @@ mod=module.exports=()=>({
     stringToObj : (string,nestObj,splitter = ' ') =>(
         (
             stringToArr = typeof string === 'string' ? string.split(splitter) :string,
-            firstArr = stringToArr[0],
-            [,...rest] = stringToArr,
+            [firstArr,...rest] = stringToArr,
             {stringToObj,match} = mod()
         )=>(
             console.log(
@@ -19,7 +18,7 @@ mod=module.exports=()=>({
                 'nestObj?.[' + firstArr + ']',
                 nestObj?.[firstArr]
             ),
-            match(
+            mod().match(
                 typeof nestObj?.[firstArr],{
                     function:()=>(
                         console.log(nestObj[firstArr]),
@@ -27,8 +26,9 @@ mod=module.exports=()=>({
                     ),
                     object:()=>rest.length && (
                         rest.join(splitter),
-                        stringToArr(rest, nestObj[firstArr])
-                    )
+                        mod().stringToArr(rest, nestObj[firstArr])
+                    ),
+                    default: nestObj?.[firstArr]
                 }
             ) ?? nestObj?.[firstArr]
         )
