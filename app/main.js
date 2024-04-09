@@ -8,19 +8,19 @@
             path = message[0].split(' ')[1]
         )=>(
             console.log(data.toString(),`\nPath: '${path}'`),(
-                match(message[0],{
+                stringToObj(message[0],{
                     GET:{
                         [path?.[1] ?? '/']:{
                             'HTTP/1.1':true
                         }
                     }
                 }) &&
-                match(message[1],{
+                stringToObj(message[1],{
                     'Host:':{
                         'localhost:4221':true
                     }
                 }) &&
-                match(message[2],{
+                stringToObj(message[2],{
                     'User-Agent:':{
                         'Go-http-client/1.1':()=>(
                             socket.end(
