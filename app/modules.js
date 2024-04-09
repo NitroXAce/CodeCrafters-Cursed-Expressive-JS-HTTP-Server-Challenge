@@ -15,7 +15,7 @@ mod=module.exports=()=>({
                 Object.keys(nestObj)[0],
                 stringToArr,
                 nestObj,
-                firstArr === Object.keys(nestObj)[0],
+                firstArr in nestObj,
                 'nestObj?.[' + firstArr + ']',
                 nestObj?.[firstArr]
             ),
