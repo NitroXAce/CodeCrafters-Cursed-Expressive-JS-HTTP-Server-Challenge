@@ -3,9 +3,9 @@ mod=module.exports=()=>({
         typeof obj?.[input] === 'function'
         ? obj[input]()
         : obj?.[input],
-    stringToObj : (string,nestObj) =>(
+    stringToObj : (string,nestObj,splitter = ' ') =>(
         (
-            stringToArr = typeof string === 'string' ? string.split(' ') :string,
+            stringToArr = typeof string === 'string' ? string.split(splitter) :string,
             firstArr = stringToArr[0],
             [,...rest] = stringToArr,
             {stringToObj,match} = mod()
@@ -15,15 +15,11 @@ mod=module.exports=()=>({
                 typeof nestObj?.[firstArr],{
                     function:()=>nestObj[firstArr](),
                     object:()=>rest.length && (
-                        rest.join(' '),
+                        rest.join(splitter),
                         stringToArr(rest, nestObj[firstArr])
-                    ),
-                    default:()=>(
-                        console.log(`match returned: ${nestObj?.[firstArr]}`),
-                        nestObj?.[firstArr]
                     )
                 }
-            )
+            ) ?? nestObj?.[firstArr]
         )
     )()
 })
