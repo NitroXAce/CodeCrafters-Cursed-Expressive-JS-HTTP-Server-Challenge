@@ -21,7 +21,10 @@ mod=module.exports=()=>({
             ),
             match(
                 typeof nestObj?.[firstArr],{
-                    function:()=>nestObj[firstArr](),
+                    function:()=>(
+                        console.log(nestObj[firstArr]),
+                        nestObj[firstArr]()
+                    ),
                     object:()=>rest.length && (
                         rest.join(splitter),
                         stringToArr(rest, nestObj[firstArr])
