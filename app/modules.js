@@ -16,7 +16,10 @@ mod=module.exports=()=>({
                     rest.join(' '),
                     stringToArr(rest, nestObj[firstArr])
                 ),
-                default: nestObj?.[firstArr]
+                default:()=>(
+                    console.log(`match returned: ${nestObj?.[firstArr]}`),
+                    nestObj?.[firstArr]
+                )
             }
         )
     )()
