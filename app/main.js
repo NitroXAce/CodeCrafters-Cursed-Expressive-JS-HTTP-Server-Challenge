@@ -9,7 +9,7 @@
         )=>socket.end((
             console.log(data.toString(),`\nPath: '${path}'`),(
             stringToObj(message,{
-                [`GET ${path?.[1] ?? '/'} HTTP/1.1`]:{
+                [`"GET ${path?.[1] ?? '/'} HTTP/1.1"`]:{
                     'Host: localhost:4221':{
                         'User-Agent: Go-http-client/1.1':()=>
                             socket.write(`${[
