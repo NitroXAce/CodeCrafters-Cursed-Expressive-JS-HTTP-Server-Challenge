@@ -9,27 +9,17 @@
         )=>socket.end((
             console.log(data.toString(),`\nPath: '${path}'`),(
             stringToObj(message,{
-                GET:{
-                    [path?.[1] ?? '/']:{
-                        'HTTP/1.1':true
+                [`GET ${path?.[1] ?? '/'} HTTP/1.1`]:{
+                    'Host: localhost:4221':{
+                        'User-Agent: Go-http-client/1.1':()=>
+                            socket.write(`${[
+                                'HTTP/1.1 200 OK',
+                                'Content-Type: text/plain',
+                                'Content-Length: 3',
+                                '',
+                                'abc'
+                            ].join('\r\n')}`)
                     }
-                }
-            }) &&
-            stringToObj(message[1],{
-                'Host:':{
-                    'localhost:4221':true
-                }
-            }) &&
-            stringToObj(message[2],{
-                'User-Agent:':{
-                    'Go-http-client/1.1':()=>
-                        socket.write(`${[
-                            'HTTP/1.1 200 OK',
-                            'Content-Type: text/plain',
-                            'Content-Length: 3',
-                            '',
-                            'abc'
-                        ].join('\r\n')}`)
                 }
             })
         )
