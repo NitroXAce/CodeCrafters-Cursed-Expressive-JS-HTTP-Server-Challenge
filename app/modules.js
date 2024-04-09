@@ -10,12 +10,12 @@ mod=module.exports=()=>({
             [,...rest] = stringToArr,
             {stringToObj,match} = mod()
         )=>(
-            console.log([
+            console.log(
                 firstArr,
                 nestObj,
                 'nestObj?.[' + firstArr + ']',
                 nestObj?.[firstArr]
-            ].join('\n')),
+            ),
             match(
                 typeof nestObj?.[firstArr],{
                     function:()=>nestObj[firstArr](),
