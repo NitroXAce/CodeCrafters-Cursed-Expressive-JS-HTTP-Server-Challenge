@@ -9,7 +9,7 @@
         )=>(
             console.log(data.toString(),`\nPath: '${path}'`),(
                 match(message[0],{
-                    Get:{
+                    GET:{
                         [path?.[1] ?? '/']:{
                             'HTTP/1.1':true
                         }
