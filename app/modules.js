@@ -13,10 +13,8 @@ mod=module.exports=()=>({
                 firstArr,
                 Object.keys(nestObj)[0],
                 stringToArr,
-                nestObj,
-                `"${firstArr}"` in nestObj,
-                'nestObj?.[' + firstArr + ']',
-                nestObj?.[firstArr]
+                firstArr in nestObj,
+                'nestObj?.[' + firstArr + ']'
             ),
             mod().match(
                 typeof nestObj?.[firstArr],{
