@@ -13,7 +13,7 @@ mod=module.exports=()=>({
             console.log([
                 firstArr,
                 nestObj,
-                `nestObj?.[${firstArr}]`,
+                'nestObj?.[' + firstArr + ']',
                 nestObj?.[firstArr]
             ].join('\n')),
             match(
