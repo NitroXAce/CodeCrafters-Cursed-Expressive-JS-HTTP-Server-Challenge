@@ -9,18 +9,21 @@ mod=module.exports=()=>({
             firstArr = stringToArr[0],
             [,...rest] = stringToArr,
             {stringToObj,match} = mod()
-        )=>match(
-            typeof nestObj?.[firstArr],{
-                function:()=>nestObj[firstArr](),
-                object:()=>rest.length && (
-                    rest.join(' '),
-                    stringToArr(rest, nestObj[firstArr])
-                ),
-                default:()=>(
-                    console.log(`match returned: ${nestObj?.[firstArr]}`),
-                    nestObj?.[firstArr]
-                )
-            }
+        )=>(
+            console.log(nestObj?.[firstArr]),
+            match(
+                typeof nestObj?.[firstArr],{
+                    function:()=>nestObj[firstArr](),
+                    object:()=>rest.length && (
+                        rest.join(' '),
+                        stringToArr(rest, nestObj[firstArr])
+                    ),
+                    default:()=>(
+                        console.log(`match returned: ${nestObj?.[firstArr]}`),
+                        nestObj?.[firstArr]
+                    )
+                }
+            )
         )
     )()
 })
