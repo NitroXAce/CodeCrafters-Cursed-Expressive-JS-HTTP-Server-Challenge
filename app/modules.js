@@ -26,7 +26,7 @@ mod=module.exports=()=>({
                     ),
                     object:()=>rest.length && (
                         rest.join(splitter),
-                        mod().stringToArr(rest, nestObj[firstArr])
+                        mod().stringToObj(rest, nestObj[firstArr])
                     ),
                     default: nestObj?.[firstArr]
                 }
