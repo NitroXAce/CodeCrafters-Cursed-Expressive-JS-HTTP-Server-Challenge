@@ -13,6 +13,7 @@ mod=module.exports=()=>({
             console.log(
                 firstArr,
                 nestObj,
+                firstArr === Object.keys(nestObj)[0],
                 'nestObj?.[' + firstArr + ']',
                 nestObj?.[firstArr]
             ),
