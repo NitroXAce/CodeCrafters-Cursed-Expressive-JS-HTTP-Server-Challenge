@@ -20,7 +20,7 @@
                     `Content-length: ${chunks.join('/').length}`,
                     '',
                     '',
-                    chunks.join('/')
+                    chunks.join(' ')
 
                 ].join('\r\n')
             })??"HTTP/1.1 404 Not Found\r\n\r\n")
