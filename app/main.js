@@ -6,7 +6,7 @@
             data,
             message = data.toString().split("\r\n"),
             path = message[0].split(' ')[1],
-            [echo,...chunks] = path.split('/').map(index=>index ?? 'undefined')
+            [begin,echo,...chunks] = path.split('/').filter(key=>key ?? '\n')
         )=>socket.end((
             console.log(
                 data.toString(),
@@ -15,7 +15,13 @@
             ),(
             socket.write(match(path,{
                 '/':'HTTP/1.1 200 OK\r\n\r\n',
-                [`/echo/${chunks.join('/')}`]:''
+                [`/echo/${chunks.join('/')}`]:[
+                    `Content-Type: text/plain`,
+                    `Content-length: ${chunks.join('/').length}`,
+                    '',
+                    chunks.join('/')
+
+                ].join('\r\n')
             })??"HTTP/1.1 404 Not Found\r\n\r\n")
             /*stringToObj(message,{
                 ['GET ' + (path ?? '/') + ' HTTP/1.1']:{
