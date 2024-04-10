@@ -7,7 +7,7 @@
             [
                 [
                     verb,path,httpType
-                ]=command.split(' '),
+                ]=(command=command.split(' ')),
                 [Host,address]=host.split(' '),
                 [userAgent, Agent]=agent.split(' '),
                 encoding
