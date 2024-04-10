@@ -14,9 +14,8 @@
                 `subPaths: [${chunks.join('\n')}\n]`
             ),(
             socket.write(match(path,{
-                default:"HTTP/1.1 404 Not Found\r\n\r\n",
                 '/':'HTTP/1.1 200 OK\r\n\r\n'
-            }))
+            })??"HTTP/1.1 404 Not Found\r\n\r\n")
             /*stringToObj(message,{
                 ['GET ' + (path ?? '/') + ' HTTP/1.1']:{
                     'Host: localhost:4221':{
