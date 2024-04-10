@@ -4,9 +4,13 @@
     server = net.createServer(socket => (
         socket.on('data', (
             data,
-            message = data.toString().split("\r\n"),
-            path = message[0].split(' ')[1],
-            [begin,yeet,...chunks] = path.split('/')
+            [command,host,agent,encoding] = data.toString().split("\r\n"),
+            path = command.split(' ')[1],
+            [begin,yeet,...chunks] = path.split('/'),
+            [
+                [verb,path],
+                [begin,yeet,...chunks] = path.split('/')
+            ] = message
         )=>socket.end((
             socket.write(
                 match(path,{
