@@ -5,14 +5,15 @@
         socket.on('data', (
             data,
             [
-                [
-                    verb,path,httpType
-                ]=(command=command.split(' ')),
-                [Host,address]=host.split(' '),
-                [userAgent, Agent]=agent.split(' '),
+                command,
+                host,
+                agent,
                 encoding
             ] = data.toString().split("\r\n"),
-            [begin,yeet,...chunks] = path.split('/')
+            [verb,path,httpType]=command.split(' '),
+            [Host,address]=host.split(' '),
+            [userAgent, Agent]=agent.split(' '),
+            [begin,yeet,...chunks] = path.split('/'),
         )=>socket.end((
             socket.write(
                 match(path,{
