@@ -15,7 +15,7 @@
             ),(
             socket.write(match(path,{
                 '/':'HTTP/1.1 200 OK\r\n\r\n',
-                [`/echo/${chunks.join('/')}`]
+                [`/echo/${chunks.join('/')}`]:''
             })??"HTTP/1.1 404 Not Found\r\n\r\n")
             /*stringToObj(message,{
                 ['GET ' + (path ?? '/') + ' HTTP/1.1']:{
