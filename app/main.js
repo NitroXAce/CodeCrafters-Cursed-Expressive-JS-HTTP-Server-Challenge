@@ -8,15 +8,17 @@
             path = message[0].split(' ')[1],
             [begin,yeet,...chunks] = path.split('/')
         )=>socket.end(
-            socket.write(match(path,{
-                '/':'HTTP/1.1 200 OK\r\n\r\n',
-                [`/echo/${chunks.join('/')}`]:`${[
-                    'HTTP/1.1 200 OK',
-                    `Content-Type: text/plain`,
-                    `Content-length: ${chunks.join('/').length}`,
-                    ''
-                ].join('\r\n')}${chunks.join('/')}`
-            })??"HTTP/1.1 404 Not Found\r\n\r\n")
+            socket.write(
+                match(path,{
+                    '/':'HTTP/1.1 200 OK\r\n\r\n',
+                    [`/echo/${chunks.join('/')}`]:[
+                        'HTTP/1.1 200 OK',
+                        `Content-Type: text/plain`,
+                        `Content-length: ${chunks.join('/').length}`
+                    ].join('\r\n')+chunks.join('/')
+                })??
+                "HTTP/1.1 404 Not Found\r\n\r\n"
+            )
         )),
         socket.on("close", () => (
             socket.end(),
