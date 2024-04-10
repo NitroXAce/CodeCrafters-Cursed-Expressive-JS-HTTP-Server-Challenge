@@ -6,7 +6,7 @@
             data,
             message = data.toString().split("\r\n"),
             path = message[0].split(' ')[1],
-            [begin,...chunks] = path.split('/')
+            [begin,yeet,...chunks] = path.split('/')
         )=>socket.end(
             socket.write(match(path,{
                 '/':'HTTP/1.1 200 OK\r\n\r\n',
