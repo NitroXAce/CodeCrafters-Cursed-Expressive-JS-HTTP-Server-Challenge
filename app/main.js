@@ -8,7 +8,7 @@
             path = message[0].split(' ')[1]
         )=>socket.end((
             console.log(data.toString(),`\nPath: '${path}'`),(
-            socketWrite(match(path,{
+            socket.write(match(path,{
                 default:"HTTP/1.1 404 Not Found\r\n\r\n",
                 path:[
                     'HTTP/1.1 200 OK',
