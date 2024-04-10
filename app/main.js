@@ -8,7 +8,11 @@
             path = message[0].split(' ')[1],
             [...chunks] = path.split('/')
         )=>socket.end((
-            console.log(data.toString(),`\nPath: '${path}'``subPaths: [${chunks.join('\n')}\n]`),(
+            console.log(
+                data.toString(),
+                `\nPath: '${path}'`,
+                `subPaths: [${chunks.join('\n')}\n]`
+            ),(
             socket.write(match(path,{
                 default:"HTTP/1.1 404 Not Found\r\n\r\n",
                 '/':'HTTP/1.1 200 OK\r\n\r\n'
