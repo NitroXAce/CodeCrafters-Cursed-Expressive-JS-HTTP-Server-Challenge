@@ -11,6 +11,7 @@
             socket.write(match(path,{
                 '/':'HTTP/1.1 200 OK\r\n\r\n',
                 [`/echo/${chunks.join('/')}`]:[
+                    'HTTP/1.1 200 OK',
                     `Content-Type: text/plain`,
                     `Content-length: ${chunks.join('/').length}`,
                     '',
