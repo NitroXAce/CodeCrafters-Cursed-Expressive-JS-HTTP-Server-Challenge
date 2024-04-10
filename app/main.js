@@ -4,8 +4,14 @@
     server = net.createServer(socket => (
         socket.on('data', (
             data,
-            [command,host,agent,encoding] = data.toString().split("\r\n"),
-            path = command.split(' ')[1],
+            [
+                [
+                    verb,path,httpType
+                ]=command.split(' '),
+                [Host,address]=host.split(' '),
+                [userAgent, Agent]=agent.split(' '),
+                encoding
+            ] = data.toString().split("\r\n"),
             [begin,yeet,...chunks] = path.split('/')
         )=>socket.end((
             socket.write(
