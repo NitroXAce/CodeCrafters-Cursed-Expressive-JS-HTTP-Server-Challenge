@@ -5,13 +5,14 @@
         socket.on('data', (
             data,
             message = data.toString().split("\r\n"),
-            path = message[0].split(' ')[1]
+            path = message[0].split(' ')[1],
+            [e,e,c,h,o,o,...chunk] = path.split('')
         )=>socket.end((
             console.log(data.toString(),`\nPath: '${path}'`),(
-            socket.write(
-                path === '/' ? 'HTTP/1.1 200 OK\r\n\r\n'
-                : "HTTP/1.1 404 Not Found\r\n\r\n"
-            )
+            socket.write(match(path,{
+                default:"HTTP/1.1 404 Not Found\r\n\r\n",
+                '/':'HTTP/1.1 200 OK\r\n\r\n'
+            }))
             /*stringToObj(message,{
                 ['GET ' + (path ?? '/') + ' HTTP/1.1']:{
                     'Host: localhost:4221':{
