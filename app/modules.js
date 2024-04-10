@@ -16,15 +16,12 @@ mod=module.exports=()=>({
                 firstArr in nestObj,
                 'nestObj?.[' + firstArr + ']'
             ),
-            mod().match(
+            match(
                 typeof nestObj?.[firstArr],{
-                    function:()=>(
-                        console.log(nestObj[firstArr]),
-                        nestObj[firstArr]()
-                    ),
+                    function:()=>nestObj[firstArr](),
                     object:()=>rest.length && (
                         rest.join(splitter),
-                        mod().stringToObj(rest, nestObj[firstArr])
+                        stringToObj(rest, nestObj[firstArr])
                     ),
                     default: nestObj?.[firstArr]
                 }
