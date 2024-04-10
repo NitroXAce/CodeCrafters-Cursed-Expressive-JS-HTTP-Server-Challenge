@@ -6,11 +6,7 @@
             data,
             [command,host,agent,encoding] = data.toString().split("\r\n"),
             path = command.split(' ')[1],
-            [begin,yeet,...chunks] = path.split('/'),
-            [
-                [verb,path],
-                [begin,yeet,...chunks] = path.split('/')
-            ] = message
+            [begin,yeet,...chunks] = path.split('/')
         )=>socket.end((
             socket.write(
                 match(path,{
