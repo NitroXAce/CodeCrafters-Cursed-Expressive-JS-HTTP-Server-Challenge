@@ -6,7 +6,7 @@
             data,
             message = data.toString().split("\r\n"),
             path = message[0].split(' ')[1],
-            [begin,echo,...chunks] = path.split('/').filter(key=>key ?? '\n')
+            [begin,...chunks] = path.split('/').filter(key=>key ?? '\n')
         )=>socket.end((
             console.log(
                 data.toString(),
@@ -18,6 +18,7 @@
                 [`/echo/${chunks.join('/')}`]:[
                     `Content-Type: text/plain`,
                     `Content-length: ${chunks.join('/').length}`,
+                    '',
                     '',
                     chunks.join('/')
 
