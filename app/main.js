@@ -11,14 +11,14 @@
             socket.write(match(path,{
                 '/':'HTTP/1.1 200 OK\r\n\r\n',
                 [`/echo/${chunks.join('/')}`]:[
-                    'HTTP/1.1 200 OK',
-                    `Content-Type: text/plain`,
-                    `Content-length: ${chunks.join('/').length}`,
-                    '',
-                    '',
+                    'HTTP/1.1 200 OK\r\n',
+                    `Content-Type: text/plain\r\n`,
+                    `Content-length: ${chunks.join('/').length}\r\n`,
+                    '\r\n',
+                    '\r\n',
                     chunks.join(' ')
 
-                ].join('\r\n')
+                ].join('')
             })??"HTTP/1.1 404 Not Found\r\n\r\n")
         )),
         socket.on("close", () => (
