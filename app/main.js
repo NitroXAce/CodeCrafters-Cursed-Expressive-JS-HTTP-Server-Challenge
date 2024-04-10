@@ -14,7 +14,7 @@
                     [`/echo/${chunks.join('/')}`]:[
                         'HTTP/1.1 200 OK\r\n',
                         `Content-Type: text/plain\r\n`,
-                        `Content-length: ${chunks.join('/').length}\r\n`,
+                        `Content-length: ${chunks.join('/').length -1}\r\n`,
                         '',
                         chunks.join('/')
                     ].join('')
