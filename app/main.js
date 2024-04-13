@@ -4,12 +4,7 @@
     server = net.createServer(socket => (
         socket.on('data', (
             data,
-            [
-                command,
-                host,
-                agent,
-                encoding
-            ] = data.toString().split("\r\n"),
+            [ command, host, agent, encoding] = data.toString().split("\r\n"),
             [verb,path,httpType]=command.split(' '),
             [Host,address]=host.split(' '),
             [userAgent, Agent]=agent.split(' '),
