@@ -36,5 +36,5 @@ mod=module.exports=()=>({
             '\r\n',
             send
         ].join('')
-        : 'HTTP/1.1 200 OK\r\n\r\n'
+        : send === 'open' && 'HTTP/1.1 200 OK\r\n\r\n'
 })
