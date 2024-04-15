@@ -18,7 +18,7 @@
                         dirArg = process.argv.findIndex(el => el === '--directory') + 1,
                         dirPath = dirArg && process.argv[dirArg],
                         fileName = chunks.join('/'),
-                        filePath = dirArg && (console.log(dirPath,fileName),dirPath.split(' ').join(''))
+                        filePath = dirArg && (console.log(dirPath,fileName),path.join(dirPath,chunks.join('/')))
                     )=> !dirArg ? 500 : 
                         fs.existsSync(filePath) &&
                         fs.readFileSync(filePath).toString('utf-8')
