@@ -9,7 +9,7 @@
             [Host,address]=host.split(' '),
             [userAgent, Agent]=agent.split(' '),
             [begin,yeet,...chunks] = path.split('/'),
-        )=>socket.end(socket.write(
+        )=>socket.write(
             match(verb,{
                 GET:match(path,{
                     '/':'HTTP/1.1 200 OK\r\n\r\n',
@@ -17,7 +17,7 @@
                     '/user-agent':responseBody(Agent)
                 })
             }) ?? "HTTP/1.1 404 Not Found\r\n\r\n")
-        )),
+        ),
         socket.on("close", () => (
             socket.end(),
             server.close()
