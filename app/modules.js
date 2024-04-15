@@ -27,7 +27,8 @@
             )
         )
     )(),
-    responseBody = send =>
+    responseBody = send =>(
+        console.log(send),
         match(send,{
             200: 'HTTP/1.1 200 OK\r\n\r\n',
             404: "HTTP/1.1 404 Not Found\r\n\r\n",
@@ -41,6 +42,7 @@
                 send
             ].join('')
             :''
+    )
 )=>module.exports=()=>({
     match,stringToObj,responseBody
 }))()
