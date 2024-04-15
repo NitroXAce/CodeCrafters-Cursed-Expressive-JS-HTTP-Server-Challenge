@@ -28,11 +28,13 @@ mod=module.exports=()=>({
             ) ?? nestObj?.[firstArr]
         )
     )(),
-    responseBody : send => [
-        'HTTP/1.1 200 OK\r\n',
-        `Content-Type: text/plain\r\n`,
-        `Content-length: ${send.length}\r\n`,
-        '\r\n',
-        send
-    ].join('')
+    responseBody : send => send.length 
+        ?[
+            'HTTP/1.1 200 OK\r\n',
+            `Content-Type: text/plain\r\n`,
+            `Content-length: ${send.length}\r\n`,
+            '\r\n',
+            send
+        ].join('')
+        : 'HTTP/1.1 200 OK\r\n\r\n'
 })
