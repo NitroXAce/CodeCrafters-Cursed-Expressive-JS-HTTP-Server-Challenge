@@ -11,11 +11,13 @@
             [begin,yeet,...chunks] = path.split('/'),
         )=>socket.write(
             match(verb,{
-                GET:responseBody( match(path,{
-                    '/':'',
-                    [`/echo/${chunks.join('/')}`]:chunks.join('/'),
-                    '/user-agent':Agent
-                }))
+                GET:responseBody(
+                        match(path,{
+                        '/':'',
+                        [`/echo/${chunks.join('/')}`]:chunks.join('/'),
+                        '/user-agent':Agent
+                    }) ?? 404
+                )
             })
         )),
         socket.on("close", () => (

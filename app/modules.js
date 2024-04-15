@@ -36,7 +36,7 @@ mod=module.exports=()=>({
             '\r\n',
             send
         ].join('')
-        : send?.length === 1 
-        ? 'HTTP/1.1 200 OK\r\n\r\n'
-        : "HTTP/1.1 404 Not Found\r\n\r\n"
+        : send === '404'
+        ? "HTTP/1.1 404 Not Found\r\n\r\n"
+        : 'HTTP/1.1 200 OK\r\n\r\n'
 })
