@@ -14,11 +14,11 @@
                     '/':200,
                     '/user-agent':Agent,
                     [`/echo/${chunks.join('/')}`]:chunks.join('/'),
-                    [`/files/${chunks.join('/')}`]:(
+                    [`/files/${chunks.join('')}`]:(
                         dirArg = process.argv.findIndex(el => el === '--directory') + 1,
                         dirPath = dirArg && process.argv[dirArg],
-                        fileName = chunks.join('/'),
-                        filePath = dirArg && (console.log(dirPath,fileName),nodePath.join(dirPath,chunks.join('/')))
+                        fileName = chunks.join(''),
+                        filePath = dirArg && (console.log(dirPath,fileName),nodePath.join(dirPath,fileName))
                     )=> !dirArg ? 500 : 
                         fs.existsSync(filePath) &&
                         fs.readFileSync(filePath).toString('utf-8')
