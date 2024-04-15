@@ -10,15 +10,21 @@
             [begin,yeet,...chunks] = path.split('/'),
         )=>socket.write(
             match(verb,{
-                GET:(
-                    bool = match(path,{
-                        '/':'open',
-                        [`/echo/${chunks.join('/')}`]:chunks.join('/'),
-                        '/user-agent':Agent
-                    })
-                )=> bool
-                    ? responseBody(bool)
-                    : "HTTP/1.1 404 Not Found\r\n\r\n"
+                GET: responseBody(match(path,{
+                    '/':200,
+                    '/user-agent':Agent,
+                    [`/echo/${chunks.join('/')}`]:chunks.join('/'),
+                    [`/files/${chunks.join('/')}`]:(
+                        nodePath = '',
+                        dirArg = process.argv.findIndex(el => el === '--directory') + 1,
+                        dirPath = dirArg && process.argv[dirArg],
+                        fileName = chunks.join('/'),
+                        filePath = dirArg && nodePath.join(dirPath, fileName)
+
+                    )=> !dirArg ? 500 : 
+                        fs.existsSync(filePath) &&
+                        fs.readFileSync(filePath).toString('utf-8')
+                }) || 404)
                 
             })
         )),

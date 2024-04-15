@@ -1,13 +1,12 @@
-mod=module.exports=()=>({
-    match : (input,obj) =>
+((
+    match = (input,obj) =>
         typeof obj?.[input] === 'function'
         ? obj[input]()
         : obj?.[input],
-    stringToObj : (string,nestObj,splitter = ' ') =>(
+    stringToObj = (string,nestObj,splitter = ' ') =>(
         (
             stringToArr = typeof string === 'string' ? string.split(splitter) :string,
             [firstArr,...rest] = stringToArr,
-            {stringToObj,match} = mod()
         )=>(
             console.log(
                 firstArr,
@@ -28,13 +27,20 @@ mod=module.exports=()=>({
             )
         )
     )(),
-    responseBody : send => send?.length  
-        ?[
-            'HTTP/1.1 200 OK\r\n',
-            `Content-Type: text/plain\r\n`,
-            `Content-length: ${send.length}\r\n`,
-            '\r\n',
-            send
-        ].join('')
-        : send === 'open' && 'HTTP/1.1 200 OK\r\n\r\n'
-})
+    responseBody = send =>
+        match(send,{
+            200: 'HTTP/1.1 200 OK\r\n\r\n',
+            404: "HTTP/1.1 404 Not Found\r\n\r\n",
+            500: "HTTP/1.1 500 Internal Server Error\r\n\r\n"
+        }) ?? send?.length
+            ?[
+                'HTTP/1.1 200 OK\r\n',
+                `Content-Type: text/plain\r\n`,
+                `Content-length: ${send.length}\r\n`,
+                '\r\n',
+                send
+            ].join('')
+            :''
+)=>module.exports=()=>({
+    match,stringToObj,responseBody
+}))()
