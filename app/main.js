@@ -1,6 +1,5 @@
 ((
-    net = require('net'),
-    {match, stringToObj,responseBody} = require('./modules')(),
+    {fs,path,net, match, stringToObj, responseBody} = require('./dependencies'),
     server = net.createServer(socket => (
         socket.on('data', (
             data,
@@ -23,11 +22,11 @@
                 
             })
         )),
-        socket.on("close", () => (
+        socket.on("close", () =>
             socket.close(
                 socket.end()
             )
-        ))
+        )
     ))
 )=>
     server.listen(4221, "localhost")

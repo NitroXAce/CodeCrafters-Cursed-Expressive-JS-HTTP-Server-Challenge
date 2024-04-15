@@ -25,7 +25,7 @@ mod=module.exports=()=>({
                     ),
                     default: nestObj?.[firstArr]
                 }
-            ) ?? nestObj?.[firstArr]
+            )
         )
     )(),
     responseBody : send => send?.length  
