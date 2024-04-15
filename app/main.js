@@ -11,7 +11,7 @@
             [begin,yeet,...chunks] = path.split('/'),
         )=>socket.end(socket.write(
             match(verb,{
-                GET:()=> match(path,{
+                GET:match(path,{
                     '/':'HTTP/1.1 200 OK\r\n\r\n',
                     [`/echo/${chunks.join('/')}`]:responseBody(chunks.join('/')),
                     '/user-agent':responseBody(Agent)
