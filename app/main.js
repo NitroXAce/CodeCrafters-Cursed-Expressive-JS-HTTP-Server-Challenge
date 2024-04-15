@@ -13,7 +13,7 @@
             match(verb,{
                 GET:(
                     bool = match(path,{
-                        '/':'',
+                        '/':0,
                         [`/echo/${chunks.join('/')}`]:chunks.join('/'),
                         '/user-agent':Agent
                     })
