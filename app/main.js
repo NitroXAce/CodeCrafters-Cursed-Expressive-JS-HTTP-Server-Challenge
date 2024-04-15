@@ -1,6 +1,6 @@
 ((
     net = require('net'),
-    {match, stringToObj} = require('./modules')(),
+    {match, stringToObj,responseBody} = require('./modules')(),
     server = net.createServer(socket => (
         socket.on('data', (
             data,
@@ -14,14 +14,9 @@
                 GET:()=>socket.write(
                     match(path,{
                         '/':'HTTP/1.1 200 OK\r\n\r\n',
-                        [`/echo/${chunks.join('/')}`]:[
-                            'HTTP/1.1 200 OK\r\n',
-                            `Content-Type: text/plain\r\n`,
-                            `Content-length: ${chunks.join('/').length}\r\n`,
-                            '\r\n',
-                            chunks.join('/')
-                        ].join('')
-                    })??
+                        [`/echo/${chunks.join('/')}`]:responseBody(chunks.join('/')),
+                        '/user-agent':responseBody(Agent)
+                    }) ??
                     "HTTP/1.1 404 Not Found\r\n\r\n"
                 )
             })
@@ -31,6 +26,6 @@
             server.close()
         ))
     ))
-)=>(
+)=>
     server.listen(4221, "localhost")
-))()
+)()
