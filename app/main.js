@@ -11,13 +11,16 @@
             [begin,yeet,...chunks] = path.split('/'),
         )=>socket.write(
             match(verb,{
-                GET:responseBody(
-                        match(path,{
+                GET:(
+                    bool = match(path,{
                         '/':'',
                         [`/echo/${chunks.join('/')}`]:chunks.join('/'),
                         '/user-agent':Agent
-                    }) ?? 404
-                )
+                    })
+                )=> bool
+                    ? responseBody(bool)
+                    : "HTTP/1.1 404 Not Found\r\n\r\n"
+                
             })
         )),
         socket.on("close", () => (
