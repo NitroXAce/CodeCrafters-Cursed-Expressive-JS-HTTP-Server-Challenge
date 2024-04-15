@@ -16,8 +16,7 @@
                         '/':'HTTP/1.1 200 OK\r\n\r\n',
                         [`/echo/${chunks.join('/')}`]:responseBody(chunks.join('/')),
                         '/user-agent':responseBody(Agent)
-                    }) ??
-                    "HTTP/1.1 404 Not Found\r\n\r\n"
+                    }) ?? "HTTP/1.1 404 Not Found\r\n\r\n"
                 )
             })
         )),
