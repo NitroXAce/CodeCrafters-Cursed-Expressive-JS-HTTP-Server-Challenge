@@ -11,7 +11,7 @@
         )=>socket.write(
             match(verb,{
                 GET: responseBody(match(path,{
-                    '/':'200',
+                    '/':200,
                     '/user-agent':Agent,
                     [`/echo/${chunks.join('/')}`]:chunks.join('/'),
                     [`/files/${chunks.join('/')}`]:(
@@ -21,10 +21,10 @@
                         fileName = chunks.join('/'),
                         filePath = dirArg && nodePath.join(dirPath, fileName)
 
-                    )=> !dirArg ? '500' : 
+                    )=> !dirArg ? 500 : 
                         fs.existsSync(filePath) &&
                         fs.readFileSync(filePath).toString('utf-8')
-                })?? '404')
+                })?? 404)
                 
             })
         )),

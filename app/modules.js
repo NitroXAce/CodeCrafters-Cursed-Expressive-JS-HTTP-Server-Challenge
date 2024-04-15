@@ -29,19 +29,22 @@
     )(),
     responseBody = send =>(
         console.log(send),
-        match(send,{
-            200: 'HTTP/1.1 200 OK\r\n\r\n',
-            404: "HTTP/1.1 404 Not Found\r\n\r\n",
-            500: "HTTP/1.1 500 Internal Server Error\r\n\r\n"
-        }) ?? send?.length
-            ?[
-                'HTTP/1.1 200 OK\r\n',
-                `Content-Type: text/plain\r\n`,
-                `Content-length: ${send.length}\r\n`,
-                '\r\n',
-                send
-            ].join('')
-            :''
+        match(typeof send,{
+            number:match(send,{
+                200: 'HTTP/1.1 200 OK\r\n\r\n',
+                404: "HTTP/1.1 404 Not Found\r\n\r\n",
+                500: "HTTP/1.1 500 Internal Server Error\r\n\r\n"
+            }),
+            string:send?.length
+                ?[
+                    'HTTP/1.1 200 OK\r\n',
+                    `Content-Type: text/plain\r\n`,
+                    `Content-length: ${send.length}\r\n`,
+                    '\r\n',
+                    send
+                ].join('')
+                :''
+        })
     )
 )=>module.exports=()=>({
     match,stringToObj,responseBody
