@@ -23,8 +23,9 @@
 
                     )=> !dirArg ? '500' : 
                         fs.existsSync(filePath) &&
-                        fs.readFileSync(filePath).toString('utf-8')
-                }) || '404')
+                        fs.readFileSync(filePath).toString('utf-8'),
+                    default: '404'
+                }) ?? '404')
                 
             })
         )),
