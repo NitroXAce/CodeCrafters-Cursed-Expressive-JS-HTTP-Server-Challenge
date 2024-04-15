@@ -28,7 +28,7 @@ mod=module.exports=()=>({
             ) ?? nestObj?.[firstArr]
         )
     )(),
-    responseBody : send => send.length 
+    responseBody : send => send?.length 
         ?[
             'HTTP/1.1 200 OK\r\n',
             `Content-Type: text/plain\r\n`,
