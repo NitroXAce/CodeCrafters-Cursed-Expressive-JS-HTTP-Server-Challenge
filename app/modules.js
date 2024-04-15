@@ -28,7 +28,7 @@ mod=module.exports=()=>({
             ) ?? nestObj?.[firstArr]
         )
     )(),
-    responseBody : send => send?.length 
+    responseBody : send => send?.length > 1 
         ?[
             'HTTP/1.1 200 OK\r\n',
             `Content-Type: text/plain\r\n`,
@@ -36,5 +36,7 @@ mod=module.exports=()=>({
             '\r\n',
             send
         ].join('')
-        : 'HTTP/1.1 200 OK\r\n\r\n'
+        : send?.length === 1 
+        ? 'HTTP/1.1 200 OK\r\n\r\n'
+        : "HTTP/1.1 404 Not Found\r\n\r\n"
 })
