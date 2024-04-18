@@ -9,7 +9,7 @@
             [userAgent, Agent]=agent.split(' '),
             [,,...chunks] = path.split('/'),
         )=>socket.write(responseBody(...
-            match(verb,{
+            (match(verb,{
                 GET: match(path,{
                     '/':[ , 200],
                     '/user-agent':[ , Agent],
@@ -24,7 +24,7 @@
                         fs.readFileSync(filePath).toString('utf-8')
                     ]
                 })
-            }) ?? [ , 404]
+            }) ?? [ , 404])
         ))),
         socket.on("close", () =>
             socket.close(
