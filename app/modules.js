@@ -28,6 +28,7 @@
                 socket.write("HTTP/1.1 404 Not Found\r\n\r\n")
             ),
             200: ()=> socket.write('HTTP/1.1 200 OK\r\n\r\n'),
+            201: ()=> socket.write('HTTP/1.1 201 CREATED\r\n\r\n'),
             404: ()=> socket.write("HTTP/1.1 404 Not Found\r\n\r\n"),
             500: ()=> socket.write("HTTP/1.1 500 Internal Server Error\r\n\r\n"),
         }),

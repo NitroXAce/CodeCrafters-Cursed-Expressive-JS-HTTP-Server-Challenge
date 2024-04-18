@@ -21,18 +21,30 @@
                 'files' : 'application/octet-stream'
             }) ?? 'text/plain',
             match(verb,{
-                GET: match(path,{
-                    '/':200,
-                    '/user-agent':Agent,
-                    [`/echo/${chunks.join('/')}`]:chunks.join('/'),
-                    [`/files/${chunks.join('')}`]:(
+                GET: match(commandName,{
+                    '':200,
+                    'use-agent':Agent,
+                    'echo':chunks.join('/'),
+                    'files':(
                         fileName = chunks.join('')
                     )=>  
                         dirDir.indexOf(fileName) + 1 
                         ? fs.readFileSync(nodePath.join(dirPath,fileName)).toString('utf-8')
                         : 0
+                }),
+                POST: match(commandName,{
+                    files:(
+                        fileName = chunks.join('')
+                    )=>(
+                        fs.writeFileSync(
+                            nodePath.join(dirPath,fileName),
+                            fs.readFileSync(nodePath.join(dirPath,fileName)).toString('utf-8'),
+                            'utf-8'
+                        ),
+                        201
+                    )
                 })
-            }) ?? 404
+            })
         )),
         socket.on("close", () =>
             socket.close(
