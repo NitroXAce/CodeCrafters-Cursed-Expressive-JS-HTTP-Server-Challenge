@@ -35,9 +35,9 @@
                 POST: match(commandName,{
                     files:(
                         fileName = chunks.join('')
-                    )=> 
+                    )=> (
+                        console.log(dirDir,fileName),
                         dirDir.indexOf(fileName) + 1  ? (
-                            console.log(dirDir,fileName),
                             fs.writeFileSync(
                                 nodePath.join(dirPath,fileName),
                                 fs.readFileSync(nodePath.join(dirPath,fileName)).toString('utf-8'),
@@ -46,6 +46,7 @@
                             201
                         )
                         : 404 
+                    )
                 })
             }) ?? 404
         )),
