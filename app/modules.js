@@ -22,7 +22,7 @@
             default: nestObj?.[firstArr]
         })
     ))(),
-    responseBody = send => match(typeof send,{
+    responseBody = (content = 'text/plain',send) => match(typeof send,{
         number:match(send,{
             200: 'HTTP/1.1 200 OK\r\n\r\n',
             404: "HTTP/1.1 404 Not Found\r\n\r\n",
@@ -30,7 +30,7 @@
         }),
         string: send?.length && [
             'HTTP/1.1 200 OK\r\n',
-            `Content-Type: text/plain\r\n`,
+            `Content-Type: ${content}\r\n`,
             `Content-length: ${send.length}\r\n`,
             '\r\n',
             send
