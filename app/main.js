@@ -5,7 +5,7 @@
             data,
 
             //breaking down data verbose keys
-            [ command, host, agent, encoding] = data.toString().split("\r\n"),
+            [ command, host, agent, encoding,space,content] = data.toString().split("\r\n"),
             [verb,path,httpType]=command.split(' '),
             [Host,address]=host.split(' '),
             [userAgent, Agent]=agent.split(' '),
@@ -39,7 +39,7 @@
                         console.log(dirDir,fileName),
                         dirDir.indexOf(fileName) + 1  ? (
                             fs.writeFileSync(
-                                nodePath.join(dirPath,fileName),
+                                nodePath.join(dirPath,fileName,content),
                                 fs.readFileSync(nodePath.join(dirPath,fileName)).toString('utf-8'),
                                 'utf-8'
                             ),
