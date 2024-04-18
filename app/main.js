@@ -16,9 +16,9 @@
                     [`/echo/${chunks.join('/')}`]:chunks.join('/'),
                     [`/files/${chunks.join('')}`]:(
                         dirArg = process.argv.findIndex(el => el === '--directory') + 1,
-                        dirPath = dirArg && process.argv[dirArg - 1],
+                        dirPath = dirArg && process.argv[dirArg],
                         fileName = chunks.join(''),
-                        filePath = dirArg && (console.log(dirPath,fileName,nodePath),nodePath.join(dirPath,fileName))
+                        filePath = dirArg && (console.log(dirPath,fileName),nodePath.join(dirPath,fileName))
                     )=> !dirArg ? 500 : 
                         fs.existsSync(filePath) &&
                         fs.readFileSync(filePath).toString('utf-8')
