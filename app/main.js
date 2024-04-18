@@ -16,6 +16,7 @@
             dirPath = dirArg && process.argv[dirArg],
             dirDir = dirArg && fs.readdirSync(dirPath)
         )=>responseBody(
+            socket,
             match(commandName,{
                 'files' : 'application/octet-stream'
             }) ?? 'text/plain',
@@ -31,7 +32,7 @@
                         ? fs.readFileSync(nodePath.join(dirPath,fileName)).toString('utf-8')
                         : 0
                 })
-            }) ?? 404, socket
+            }) ?? 404
         )),
         socket.on("close", () =>
             socket.close(

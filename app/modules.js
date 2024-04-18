@@ -23,7 +23,7 @@
         })
     ))(),
     responseBody = (socket,content = 'text/plain',send) => match(typeof send,{
-        number:match(send,{
+        number:()=> match(send,{
             0: ()=>socket.end(
                 socket.write("HTTP/1.1 404 Not Found\r\n\r\n")
             ),
