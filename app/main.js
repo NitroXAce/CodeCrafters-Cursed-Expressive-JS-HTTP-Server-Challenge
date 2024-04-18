@@ -7,24 +7,25 @@
             [verb,path,httpType]=command.split(' '),
             [Host,address]=host.split(' '),
             [userAgent, Agent]=agent.split(' '),
-            [,,...chunks] = path.split('/'),
-        )=>socket.write(responseBody(...
-            (match(verb,{
+            [,commandName,...chunks] = path.split('/'),
+        )=>socket.write(responseBody(
+            match(commandName,{
+                'files' : 'application/octet-stream'
+            }) ?? 'text/plain',
+            match(verb,{
                 GET: match(path,{
-                    '/':[ , 200],
-                    '/user-agent':[ , Agent],
-                    [`/echo/${chunks.join('/')}`]:[ , chunks.join('/')],
+                    '/':200,
+                    '/user-agent':Agent,
+                    [`/echo/${chunks.join('/')}`]:chunks.join('/'),
                     [`/files/${chunks.join('')}`]:(
                         dirArg = process.argv.findIndex(el => el === '--directory') + 1,
                         dirPath = dirArg && process.argv[dirArg],
                         fileName = chunks.join(''),
                         filePath = dirArg && (console.log(dirPath,fileName),nodePath.join(dirPath,fileName))
-                    )=> !dirArg ? 500 : fs.existsSync(filePath) && [
-                        'application/octet-stream',
+                    )=> !dirArg ? 500 : fs.existsSync(filePath) && 
                         fs.readFileSync(filePath).toString('utf-8')
-                    ]
                 })
-            }) ?? [ , 404])
+            }) ?? 404
         ))),
         socket.on("close", () =>
             socket.close(
