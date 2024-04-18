@@ -23,8 +23,9 @@
                         fileName = chunks.join(''),
                         filePath = dirArg && (console.log(dirPath,fileName),nodePath.join(dirPath,fileName))
                     )=> !dirArg ? 500
-                    : !fs.existsSync(filePath) ? 404 
-                    : fs.readFileSync(filePath).toString('utf-8')
+                    : fs.existsSync(filePath).then(()=>
+                        fs.readFileSync(filePath).toString('utf-8')
+                    ).catch(err=>404)
                 })
             }) ?? 404
         ))),
