@@ -21,11 +21,13 @@
                         dirArg = process.argv.findIndex(el => el === '--directory') + 1,
                         dirPath = dirArg && process.argv[dirArg],
                         fileName = chunks.join('')
-                    )=> dirArg && 
+                    )=> (
+                        dirArg && 
                         fs.readdirSync(dirPath).indexOf(fileName) + 1 &&
                         fs.readFileSync(nodePath.join(dirPath,fileName)).toString('utf-8')
+                    ) || 404
                 })
-            }) || 404
+            }) ?? 404
         ))),
         socket.on("close", () =>
             socket.close(
