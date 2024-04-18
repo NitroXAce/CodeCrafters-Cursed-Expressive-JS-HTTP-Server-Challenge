@@ -22,7 +22,9 @@
             default: nestObj?.[firstArr]
         })
     ))(),
-    responseBody = (content = 'text/plain',send) => match(typeof send,{
+    responseBody = (content = 'text/plain',send) => (
+        respond=>(console.log(respond),respond)
+    )(match(typeof send,{
         number:match(send,{
             200: 'HTTP/1.1 200 OK\r\n\r\n',
             404: "HTTP/1.1 404 Not Found\r\n\r\n",
@@ -35,7 +37,7 @@
             '\r\n',
             send
         ].join('')
-    })
+    }))
 )=>module.exports={
     match,stringToObj,responseBody
 })()
