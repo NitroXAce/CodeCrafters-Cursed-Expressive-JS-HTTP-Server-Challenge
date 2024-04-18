@@ -20,13 +20,10 @@
                     [`/files/${chunks.join('')}`]:(
                         dirArg = process.argv.findIndex(el => el === '--directory') + 1,
                         dirPath = dirArg && process.argv[dirArg],
-                        fileName = chunks.join(''),
-                        filePath = dirArg && nodePath.join(dirPath,fileName)
-                    )=> fs.readdirSync(dirPath).indexOf(fileName) + 1
-                        ? fs.readFileSync(filePath).toString('utf-8')
-                        : 404
+                        fileName = chunks.join('')
+                    )=> fs.readdirSync(dirPath).indexOf(fileName) + 1 && fs.readFileSync(nodePath.join(dirPath,fileName)).toString('utf-8')
                 })
-            }) ?? 404
+            }) ||  404
         ))),
         socket.on("close", () =>
             socket.close(
