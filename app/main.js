@@ -14,6 +14,7 @@
             //getting the directory the tester sends
             dirArg = process.argv.findIndex(el => el === '--directory') + 1,
             dirPath = dirArg && process.argv[dirArg],
+            dirDir = dirArg && fs.readdirSync(dirPath)
         )=>socket.write(responseBody(
             match(commandName,{
                 'files' : 'application/octet-stream'
@@ -26,7 +27,7 @@
                     [`/files/${chunks.join('')}`]:(
                         fileName = chunks.join('')
                     )=>  
-                        fs.readdirSync(dirPath).indexOf(fileName) + 1
+                        dirDir.indexOf(fileName) + 1 
                         ? fs.readFileSync(nodePath.join(dirPath,fileName)).toString('utf-8')
                         : 404
                 })
