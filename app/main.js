@@ -37,15 +37,12 @@
                         fileName = chunks.join('')
                     )=> (
                         console.log(dirDir,fileName),
-                        dirDir.indexOf(fileName) + 1  ? (
-                            fs.writeFileSync(
-                                nodePath.join(dirPath,fileName,content),
-                                fs.readFileSync(nodePath.join(dirPath,fileName)).toString('utf-8'),
-                                'utf-8'
-                            ),
-                            201
-                        )
-                        : 404 
+                        fs.writeFileSync(
+                            nodePath.join(dirPath,fileName,content),
+                            fs.readFileSync(nodePath.join(dirPath,fileName)).toString('utf-8'),
+                            'utf-8'
+                        ),
+                        201
                     )
                 })
             }) ?? 404
