@@ -30,10 +30,9 @@
                             ),
                             nodePath.join(dirPath,fileName)
                         )
-                    )=> !dirArg ? 500
-                        : fs.readdirSync(dirPath).indexOf(fileName) + 1
-                            ? fs.readFileSync(filePath).toString('utf-8')
-                            : 404
+                    )=> fs.readdirSync(dirPath).indexOf(fileName) + 1
+                        ? fs.readFileSync(filePath).toString('utf-8')
+                        : 404
                 })
             }) ?? 404
         ))),
