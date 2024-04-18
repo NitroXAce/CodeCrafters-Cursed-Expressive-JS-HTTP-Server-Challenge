@@ -36,7 +36,8 @@
             `Content-length: ${send.length}\r\n`,
             '\r\n',
             send
-        ].join('')
+        ].join(''),
+        default : "HTTP/1.1 404 Not Found\r\n\r\n"
     }))
 )=>module.exports={
     match,stringToObj,responseBody
