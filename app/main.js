@@ -39,7 +39,7 @@
                         console.log(dirDir,fileName,content),
                         fs.writeFileSync(
                             nodePath.join(dirPath,fileName),
-                            fs.readFileSync(nodePath.join(dirPath,fileName)).toString('utf-8'),
+                            content,
                             'utf-8'
                         ),
                         201
