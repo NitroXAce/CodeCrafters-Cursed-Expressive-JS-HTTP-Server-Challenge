@@ -5,7 +5,7 @@
             data,
 
             //breaking down data verbose keys
-            [ command, host, agent, something, encoding,content] = data.toString().split("\r\n"),
+            [ command, host, agent, contentLength, encoding,space,content] = data.toString().split("\r\n"),
             [verb,path,httpType]=command.split(' '),
             [Host,address]=host.split(' '),
             [userAgent, Agent]=agent.split(' '),
@@ -36,7 +36,7 @@
                     files:(
                         fileName = chunks.join('')
                     )=> (
-                        console.log(dirDir,fileName,data.toString().split("\r\n")),
+                        console.log(dirDir,fileName,content),
                         fs.writeFileSync(
                             nodePath.join(dirPath,fileName),
                             fs.readFileSync(nodePath.join(dirPath,fileName)).toString('utf-8'),
