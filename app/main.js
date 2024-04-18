@@ -27,16 +27,13 @@
                     [`/echo/${chunks.join('/')}`]:chunks.join('/'),
                     [`/files/${chunks.join('')}`]:(
                         fileName = chunks.join('')
-                    )=>  
-                        dirDir.indexOf(fileName) + 1 
-                        ? fs.readFileSync(nodePath.join(dirPath,fileName)).toString('utf-8')
-                        : 0
+                    )=>  !dirDir.indexOf(fileName) + 1 ? 0 :
+                        fs.readFileSync(nodePath.join(dirPath,fileName)).toString('utf-8')
                 }),
                 POST: ()=> match(commandName,{
                     files:(
                         fileName = chunks.join('')
                     )=> (
-                        console.log(dirDir,fileName,content),
                         fs.writeFileSync(
                             nodePath.join(dirPath,fileName),
                             content,
@@ -44,8 +41,9 @@
                         ),
                         201
                     )
-                })
-            }) ?? 404
+                }),
+                default: 404
+            })
         )),
         socket.on("close", () =>
             socket.close(
