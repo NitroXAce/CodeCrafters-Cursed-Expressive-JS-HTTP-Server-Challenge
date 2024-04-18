@@ -29,7 +29,7 @@
                     )=>  
                         dirDir.indexOf(fileName) + 1 
                         ? fs.readFileSync(nodePath.join(dirPath,fileName)).toString('utf-8')
-                        : 404
+                        : (console.log('failed to find file, return 404'),404)
                 })
             }) ?? 404
         ))),
