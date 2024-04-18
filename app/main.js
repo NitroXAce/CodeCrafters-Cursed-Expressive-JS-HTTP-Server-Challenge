@@ -24,6 +24,7 @@
                     )=> (
                         dirArg && 
                         fs.readdirSync(dirPath).indexOf(fileName) + 1 &&
+                        fs.readFileSync(nodePath.join(dirPath,fileName)).toString('utf-8').length &&
                         fs.readFileSync(nodePath.join(dirPath,fileName)).toString('utf-8')
                     ) || 404
                 })
