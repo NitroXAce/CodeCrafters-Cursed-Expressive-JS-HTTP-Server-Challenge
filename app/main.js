@@ -21,15 +21,7 @@
                         dirArg = process.argv.findIndex(el => el === '--directory') + 1,
                         dirPath = dirArg && process.argv[dirArg],
                         fileName = chunks.join(''),
-                        filePath = dirArg && (
-                            console.log(
-                                dirPath,
-                                fileName,
-                                fs.readdirSync(dirPath),
-                                fs.readdirSync(dirPath).indexOf(fileName)
-                            ),
-                            nodePath.join(dirPath,fileName)
-                        )
+                        filePath = dirArg && nodePath.join(dirPath,fileName)
                     )=> fs.readdirSync(dirPath).indexOf(fileName) + 1
                         ? fs.readFileSync(filePath).toString('utf-8')
                         : 404
