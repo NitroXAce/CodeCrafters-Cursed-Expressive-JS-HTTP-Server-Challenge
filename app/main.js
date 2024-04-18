@@ -30,7 +30,8 @@
                     )=>  
                         dirDir.indexOf(fileName) + 1 
                         ? fs.readFileSync(nodePath.join(dirPath,fileName)).toString('utf-8')
-                        : 0
+                        : 0,
+                    default: 404
                 }),
                 POST: match(commandName,{
                     files:(
