@@ -41,9 +41,8 @@
                         ),
                         201
                     )
-                }),
-                default: 404
-            })
+                })
+            }) ?? 404
         )),
         socket.on("close", () =>
             socket.close(
