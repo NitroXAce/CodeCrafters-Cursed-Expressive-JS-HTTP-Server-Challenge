@@ -21,17 +21,16 @@
                 'files' : 'application/octet-stream'
             }) ?? 'text/plain',
             match(verb,{
-                GET: match(commandName,{
-                    '':200,
-                    'use-agent':Agent,
-                    'echo':chunks.join('/'),
-                    'files':(
+                GET: match(path,{
+                    '/':200,
+                    '/user-agent':Agent,
+                    [`/echo/${chunks.join('/')}`]:chunks.join('/'),
+                    [`/files/${chunks.join('')}`]:(
                         fileName = chunks.join('')
                     )=>  
                         dirDir.indexOf(fileName) + 1 
                         ? fs.readFileSync(nodePath.join(dirPath,fileName)).toString('utf-8')
-                        : 0,
-                    default: 404
+                        : 0
                 }),
                 POST: match(commandName,{
                     files:(
@@ -45,7 +44,7 @@
                         201
                     )
                 })
-            })
+            }) ?? 404
         )),
         socket.on("close", () =>
             socket.close(
