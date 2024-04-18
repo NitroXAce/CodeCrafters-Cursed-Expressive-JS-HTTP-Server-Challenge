@@ -7,10 +7,10 @@
             [verb,path,httpType]=command.split(' '),
             [Host,address]=host.split(' '),
             [userAgent, Agent]=agent.split(' '),
-            [begin,yeet,...chunks] = path.split('/'),
-        )=>socket.write(
+            [,,...chunks] = path.split('/'),
+        )=>socket.write(responseBody(
             match(verb,{
-                GET: responseBody(match(path,{
+                GET: match(path,{
                     '/':200,
                     '/user-agent':Agent,
                     [`/echo/${chunks.join('/')}`]:chunks.join('/'),
@@ -22,10 +22,9 @@
                     )=> !dirArg ? 500 : 
                         fs.existsSync(filePath) &&
                         fs.readFileSync(filePath).toString('utf-8')
-                }) ?? 404)
-                
-            })
-        )),
+                })
+            }) ?? 404
+        ))),
         socket.on("close", () =>
             socket.close(
                 socket.end()
