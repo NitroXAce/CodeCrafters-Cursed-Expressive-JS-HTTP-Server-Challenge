@@ -24,7 +24,8 @@
                     )=> (
                         console.log(
                             nodePath.join(dirPath,fileName),
-                            fs.readdirSync(dirPath)
+                            fs.readdirSync(dirPath),
+                            fs.readdirSync(dirPath).indexOf(fileName) + 1 || "no file found"
                         ),
                         dirArg && 
                         fs.readdirSync(dirPath).indexOf(fileName) + 1 &&
