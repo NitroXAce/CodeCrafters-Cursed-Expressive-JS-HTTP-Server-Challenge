@@ -22,23 +22,24 @@
             default: nestObj?.[firstArr]
         })
     ))(),
-    responseBody = (content = 'text/plain',send) => (
-        respond=>(console.log(respond),respond)
-    )(match(typeof send,{
+    responseBody = (socket,content = 'text/plain',send) => match(typeof send,{
         number:match(send,{
-            200: 'HTTP/1.1 200 OK\r\n\r\n',
-            404: "HTTP/1.1 404 Not Found\r\n\r\n",
-            500: "HTTP/1.1 500 Internal Server Error\r\n\r\n",
+            0: ()=>socket.end(
+                socket.write("HTTP/1.1 404 Not Found\r\n\r\n")
+            ),
+            200: socket.write('HTTP/1.1 200 OK\r\n\r\n'),
+            404: socket.write("HTTP/1.1 404 Not Found\r\n\r\n"),
+            500: socket.write("HTTP/1.1 500 Internal Server Error\r\n\r\n"),
         }),
-        string: send?.length && [
+        string: send?.length && socket.write([
             'HTTP/1.1 200 OK\r\n',
             `Content-Type: ${content}\r\n`,
             `Content-length: ${send.length}\r\n`,
             '\r\n',
             send
-        ].join(''),
-        default : "HTTP/1.1 404 Not Found\r\n\r\n"
-    }))
+        ].join('')),
+        default : socket.write("HTTP/1.1 404 Not Found\r\n\r\n")
+    })
 )=>module.exports={
     match,stringToObj,responseBody
 })()

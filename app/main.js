@@ -15,7 +15,7 @@
             dirArg = process.argv.findIndex(el => el === '--directory') + 1,
             dirPath = dirArg && process.argv[dirArg],
             dirDir = dirArg && fs.readdirSync(dirPath)
-        )=>socket.write(responseBody(
+        )=>responseBody(
             match(commandName,{
                 'files' : 'application/octet-stream'
             }) ?? 'text/plain',
@@ -29,10 +29,10 @@
                     )=>  
                         dirDir.indexOf(fileName) + 1 
                         ? fs.readFileSync(nodePath.join(dirPath,fileName)).toString('utf-8')
-                        : (console.log('failed to find file, return 404'),404)
+                        : 0
                 })
-            }) ?? 404
-        ))),
+            }) ?? 404, socket
+        )),
         socket.on("close", () =>
             socket.close(
                 socket.end()
