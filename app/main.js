@@ -35,14 +35,13 @@
                 POST: match(commandName,{
                     files:(
                         fileName = chunks.join('')
-                    )=> dirDir.indexOf(fileName) + 1  && (
+                    )=> dirDir.indexOf(fileName) + 1  && 
                         fs.writeFileSync(
                             nodePath.join(dirPath,fileName),
                             fs.readFileSync(nodePath.join(dirPath,fileName)).toString('utf-8'),
                             'utf-8'
-                        ),
+                        ) &&
                         201
-                    )
                 })
             }) ?? 404
         )),
