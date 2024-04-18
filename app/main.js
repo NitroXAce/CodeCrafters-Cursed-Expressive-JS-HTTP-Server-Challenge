@@ -3,11 +3,17 @@
     server = net.createServer(socket => (
         socket.on('data', (
             data,
+
+            //breaking down data verbose keys
             [ command, host, agent, encoding] = data.toString().split("\r\n"),
             [verb,path,httpType]=command.split(' '),
             [Host,address]=host.split(' '),
             [userAgent, Agent]=agent.split(' '),
             [,commandName,...chunks] = path.split('/'),
+
+            //getting the directory the tester sends
+            dirArg = process.argv.findIndex(el => el === '--directory') + 1,
+            dirPath = dirArg && process.argv[dirArg],
         )=>socket.write(responseBody(
             match(commandName,{
                 'files' : 'application/octet-stream'
@@ -18,20 +24,11 @@
                     '/user-agent':Agent,
                     [`/echo/${chunks.join('/')}`]:chunks.join('/'),
                     [`/files/${chunks.join('')}`]:(
-                        dirArg = process.argv.findIndex(el => el === '--directory') + 1,
-                        dirPath = dirArg && process.argv[dirArg],
                         fileName = chunks.join('')
-                    )=> (
-                        console.log(
-                            nodePath.join(dirPath,fileName),
-                            fs.readdirSync(dirPath),
-                            fs.readdirSync(dirPath).indexOf(fileName) + 1 || "no file found"
-                        ),
-                        dirArg && 
-                        fs.readdirSync(dirPath).indexOf(fileName) + 1 &&
-                        fs.readFileSync(nodePath.join(dirPath,fileName)).toString('utf-8').length &&
-                        fs.readFileSync(nodePath.join(dirPath,fileName)).toString('utf-8')
-                    ) || 404
+                    )=>  
+                        fs.readdirSync(dirPath).indexOf(fileName) + 1
+                        ? fs.readFileSync(nodePath.join(dirPath,fileName)).toString('utf-8')
+                        : 404
                 })
             }) ?? 404
         ))),
