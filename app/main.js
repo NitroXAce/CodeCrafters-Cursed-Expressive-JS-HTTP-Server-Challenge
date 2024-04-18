@@ -34,6 +34,7 @@
                     files:(
                         fileName = chunks.join('')
                     )=> (
+                        console.log(dirDir,fileName,content),
                         fs.writeFileSync(
                             nodePath.join(dirPath,fileName),
                             content,
