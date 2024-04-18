@@ -27,8 +27,9 @@
                     [`/echo/${chunks.join('/')}`]:chunks.join('/'),
                     [`/files/${chunks.join('')}`]:(
                         fileName = chunks.join('')
-                    )=>  !dirDir.indexOf(fileName) + 1 ? 0 :
-                        fs.readFileSync(nodePath.join(dirPath,fileName)).toString('utf-8')
+                    )=>  dirDir.indexOf(fileName) + 1 
+                        ? fs.readFileSync(nodePath.join(dirPath,fileName)).toString('utf-8')
+                        : 0
                 }),
                 POST: ()=> match(commandName,{
                     files:(
