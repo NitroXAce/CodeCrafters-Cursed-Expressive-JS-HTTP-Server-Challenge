@@ -1,6 +1,6 @@
 module.exports={
     fs:require('fs'),
-    path:require('path'),
+    nodePath:require('path'),
     net:require('net'),
     ...require('./modules.js')
 }
