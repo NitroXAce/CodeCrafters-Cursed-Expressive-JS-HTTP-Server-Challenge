@@ -21,7 +21,7 @@
                 'files' : 'application/octet-stream'
             }) ?? 'text/plain',
             match(verb,{
-                GET: match(path,{
+                GET: ()=> match(path,{
                     '/':200,
                     '/user-agent':Agent,
                     [`/echo/${chunks.join('/')}`]:chunks.join('/'),
@@ -32,7 +32,7 @@
                         ? fs.readFileSync(nodePath.join(dirPath,fileName)).toString('utf-8')
                         : 0
                 }),
-                POST: match(commandName,{
+                POST: ()=> match(commandName,{
                     files:(
                         fileName = chunks.join('')
                     )=> (
