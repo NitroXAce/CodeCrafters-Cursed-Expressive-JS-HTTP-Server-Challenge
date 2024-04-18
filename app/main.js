@@ -22,7 +22,10 @@
                         dirPath = dirArg && process.argv[dirArg],
                         fileName = chunks.join('')
                     )=> (
-                        console.log(nodePath.join(dirPath,fileName)),
+                        console.log(
+                            nodePath.join(dirPath,fileName),
+                            fs.readdirSync(dirPath)
+                        ),
                         dirArg && 
                         fs.readdirSync(dirPath).indexOf(fileName) + 1 &&
                         fs.readFileSync(nodePath.join(dirPath,fileName)).toString('utf-8').length &&
