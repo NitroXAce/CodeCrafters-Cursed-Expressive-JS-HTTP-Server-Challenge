@@ -2,26 +2,6 @@
     match = (input,obj) => typeof obj?.[input] === 'function'
         ? obj[input]()
         : obj?.[input],
-    stringToObj = (string,nestObj,splitter = ' ') =>((
-        stringToArr = typeof string === 'string' ? string.split(splitter) :string,
-        [firstArr,...rest] = stringToArr,
-    )=>(
-        console.log(
-            firstArr,
-            Object.keys(nestObj),
-            stringToArr,
-            firstArr in nestObj,
-            'nestObj?.[' + firstArr + ']'
-        ),
-        match( typeof nestObj?.[firstArr],{
-            function:()=>nestObj[firstArr](),
-            object:()=>rest.length && (
-                rest.join(splitter),
-                stringToObj(rest, nestObj[firstArr])
-            ),
-            default: nestObj?.[firstArr]
-        })
-    ))(),
     responseBody = (socket,content = 'text/plain',send) => match(typeof send,{
         number:()=> match(send,{
             0: ()=>socket.end(
@@ -42,5 +22,5 @@
         default : ()=> socket.write("HTTP/1.1 404 Not Found\r\n\r\n")
     })
 )=>module.exports={
-    match,stringToObj,responseBody
+    match,responseBody
 })()

@@ -1,20 +1,22 @@
 ((
-    {fs,nodePath,net, match, stringToObj, responseBody} = require('./dependencies'),
+    { fs, nodePath, net, match, responseBody } = require('./dependencies'),
     server = net.createServer(socket => (
         socket.on('data', (
             data,
 
             //breaking down data verbose keys
-            [ command, host, agent, contentLength, encoding,space,content] = data.toString().split("\r\n"),
-            [verb,path,httpType]=command.split(' '),
-            [Host,address]=host.split(' '),
-            [userAgent, Agent]=agent.split(' '),
-            [,commandName,...chunks] = path.split('/'),
+            [ command, host, agent, contentLength, encoding, space, content ] = data.toString().split("\r\n"),
+            [ verb, path, httpType ] = command.split(' '),
+            [ Host, address ] = host.split(' '),
+            [ userAgent, Agent ] = agent.split(' '),
+            [ , commandName, ...chunks ] = path.split('/'),
 
             //getting the directory the tester sends
             dirArg = process.argv.findIndex(el => el === '--directory') + 1,
             dirPath = dirArg && process.argv[dirArg],
-            dirDir = dirArg && fs.readdirSync(dirPath)
+            dirDir = dirArg && fs.readdirSync(dirPath),
+            fileName = chunks.join('')
+
         )=>responseBody(
             socket,
             match(commandName,{
@@ -24,17 +26,14 @@
                 GET: ()=> match(path,{
                     '/':200,
                     '/user-agent':Agent,
-                    [`/echo/${chunks.join('/')}`]:chunks.join('/'),
-                    [`/files/${chunks.join('')}`]:(
-                        fileName = chunks.join('')
-                    )=>  dirDir.indexOf(fileName) + 1 
+                    [`/echo/${chunks.join('/')}`]: chunks.join('/'),
+                    [`/files/${chunks.join('')}`]: () => 
+                        dirDir.indexOf(fileName) + 1 
                         ? fs.readFileSync(nodePath.join(dirPath,fileName)).toString('utf-8')
                         : 0
                 }),
                 POST: ()=> match(commandName,{
-                    files:(
-                        fileName = chunks.join('')
-                    )=> (
+                    files: ()=> (
                         fs.writeFileSync(
                             nodePath.join(dirPath,fileName),
                             content,
