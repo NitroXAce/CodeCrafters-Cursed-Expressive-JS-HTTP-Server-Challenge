@@ -1,7 +1,8 @@
 function match(input,obj){
-    if (typeof obj?.[input] === 'function')
-        return obj[input]();
-    return obj?.[input];
+    const condition = obj?.[input];
+    if (typeof condition === 'function')
+        return condition();
+    return condition;
 }
 
 function responseBody(socket,content,send){

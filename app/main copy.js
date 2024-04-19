@@ -56,11 +56,10 @@ const server = net.createServer(socket => {
             404
         );
 
-        socket.on("close", () =>
-            socket.close(
-                socket.end()
-            )
-        );
+        socket.on("close", function(){
+            socket.end();
+            socket.close();
+        });
     });
 });
 

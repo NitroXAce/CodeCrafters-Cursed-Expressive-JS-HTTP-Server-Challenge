@@ -36,3 +36,7 @@ Note: This section is for stages 2 and beyond.
    `app/main.js`.
 1. Commit your changes and run `git push origin master` to submit your solution
    to CodeCrafters. Test output will be streamed to your terminal.
+
+**Notice**: 
+To all who are reading these, the main and dependencies files are written in cursed, expressive javascript.
+The ones denoted with the "copy" in its name, is been rewritten for "complacent" Javascript practices 99% will read of.

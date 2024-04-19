@@ -12,13 +12,17 @@
             404: ()=> socket.write("HTTP/1.1 404 Not Found\r\n\r\n"),
             500: ()=> socket.write("HTTP/1.1 500 Internal Server Error\r\n\r\n"),
         }),
-        string: ()=>send?.length && socket.write([
-            'HTTP/1.1 200 OK\r\n',
-            `Content-Type: ${content}\r\n`,
-            `Content-length: ${send.length}\r\n`,
-            '\r\n',
-            send
-        ].join('')),
+        string: ()=>socket.write(
+            send?.length
+            ? [
+                'HTTP/1.1 200 OK\r\n',
+                `Content-Type: ${content}\r\n`,
+                `Content-length: ${send.length}\r\n`,
+                '\r\n',
+                send
+            ].join('')
+            : socket.write("HTTP/1.1 500 Internal Server Error\r\n\r\n")
+        ),
         default : ()=> socket.write("HTTP/1.1 404 Not Found\r\n\r\n")
     })
 )=>module.exports={
