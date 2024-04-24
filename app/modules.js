@@ -39,7 +39,7 @@
         )=>
             index === bodyArr.length -1 
             ? bodyObj.content = method
-            : bodyObj[key] = properties
+            : bodyObj[key.replaceAll(':','')] = properties
         )()),
         bodyObj
     ))()
