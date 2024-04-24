@@ -31,13 +31,15 @@
         bodyArr = body.toString().split('\r\n'),
         bodyObj = {}
     )=>(
-        bodyArr.forEach(method=>((
+        bodyArr.forEach((method,index)=>((
             [
                 key = 'blank',
                 ...properties
             ] = method.split(' ')
         )=>
-            bodyObj[key] = properties
+            index === bodyArr.length -1 
+            ? bodyObj.content = [key, properties].join(' ')
+            : bodyObj[key] = properties
         )()),
         bodyObj
     ))()
