@@ -39,7 +39,7 @@
         )=>
             bodyObj[key] = properties
         )()),
-        bobjObj
+        bodyObj
     ))()
 )=>module.exports={
     match,responseBody,httpBody
