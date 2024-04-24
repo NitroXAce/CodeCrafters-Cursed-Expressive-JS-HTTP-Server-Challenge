@@ -26,7 +26,21 @@
                 : "HTTP/1.1 500 Internal Server Error\r\n\r\n"
             ),
             default : ()=> socket.write("HTTP/1.1 404 Not Found\r\n\r\n")
-        })
+        }),
+    httpBody = body => ((
+        bodyArr = body.toString().split('\r\n'),
+        bodyObj = {}
+    )=>(
+        bodyArr.forEach(method=>((
+            [
+                key = 'blank',
+                ...properties
+            ] = method.split(' ')
+        )=>
+            bodyObj[key] = properties
+        )()),
+        bobjObj
+    ))()
 )=>module.exports={
     match,responseBody
 })()

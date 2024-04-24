@@ -1,5 +1,5 @@
 ((
-    { fs, nodePath, net, match, responseBody } = require('./dependencies'),
+    { fs, nodePath, net, match, responseBody, httpBody } = require('./dependencies'),
     server = net.createServer(socket => (
         socket.on('data', (
             data,
@@ -17,7 +17,9 @@
             dirDir = dirArg && fs.readdirSync(dirPath),
             fileName = chunks.join('')
 
-        )=>responseBody(
+        )=>(
+            console.log(httpBody(data)),
+            responseBody(
             socket,
             match(commandName,{
                 'files' : 'application/octet-stream'
@@ -43,7 +45,7 @@
                     )
                 })
             }) ?? 404
-        )),
+        ))),
         socket.on("close", () =>
             socket.close(
                 socket.end()
