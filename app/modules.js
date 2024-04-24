@@ -38,7 +38,7 @@
             ] = method.split(' ')
         )=>
             index === bodyArr.length -1 
-            ? bodyObj.content = [key, properties].join(' ')
+            ? bodyObj.content = method
             : bodyObj[key] = properties
         )()),
         bodyObj
