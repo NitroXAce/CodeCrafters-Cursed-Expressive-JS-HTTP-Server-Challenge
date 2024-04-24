@@ -42,5 +42,5 @@
         bobjObj
     ))()
 )=>module.exports={
-    match,responseBody
+    match,responseBody,httpBody
 })()
