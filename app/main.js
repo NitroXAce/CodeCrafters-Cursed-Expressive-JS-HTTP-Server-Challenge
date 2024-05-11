@@ -15,7 +15,16 @@
             dirArg = process.argv.findIndex(el => el === '--directory') + 1,
             dirPath = dirArg && process.argv[dirArg],
             dirDir = dirArg && fs.readdirSync(dirPath),
-            fileName = chunks.join('')
+            fileName = chunks.join(''),
+
+            //object form HTTPBody()
+            {
+                //possible verbs
+                GET, PUT, HEAD, OPTIONS,
+
+                //
+
+            } = httpBody(data)
 
         )=>(
             console.log(httpBody(data)),
