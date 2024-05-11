@@ -55,7 +55,7 @@ const server = net.createServer(socket => {
                         default : 404
                     })
                 }
-            })
+            }) ?? 404
         );
 
         socket.on("close", function(){
