@@ -1,6 +1,6 @@
 const { fs, nodePath, net, match, responseBody } = require('./dependencies');
 const server = net.createServer(socket => {
-    socket.on('data', data =>{
+    socket.on('data', data => {
 
         //breaking down data verbose keys
         const [ command, host, agent, contentLength, encoding, space, content ] = data.toString().split("\r\n");
@@ -25,8 +25,9 @@ const server = net.createServer(socket => {
         responseBody(
             socket,
             match(commandName,{
-                'files' : 'application/octet-stream'
-            }) ?? 'text/plain',
+                'files' : 'application/octet-stream',
+                default : 'text/plain'
+            }),
             match(verb,{
                 GET(){
                     match(path,{
@@ -37,7 +38,8 @@ const server = net.createServer(socket => {
                             if (dirDir.indexOf(fileName) + 1)
                                 return fs.readFileSync(nodePath.join(dirPath,fileName)).toString('utf-8');
                             return 0;
-                        }
+                        },
+                        default : 404
                     })
                 },
                 POST(){
@@ -49,11 +51,11 @@ const server = net.createServer(socket => {
                                 'utf-8'
                             );
                             return 201;
-                        }
+                        },
+                        default : 404
                     })
                 }
-            }) ?? 
-            404
+            })
         );
 
         socket.on("close", function(){
